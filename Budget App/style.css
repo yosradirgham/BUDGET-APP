@@ -1,0 +1,15 @@
+.month-budget{
+    height: 50vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(cute-pink.jpg);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.enter-budget{
+
+}
+
+.budget-description{
+
+}
