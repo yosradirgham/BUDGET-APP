@@ -1,24 +1,86 @@
-.month-budget{
-    height: 45vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.25)), url(cute-pink.jpg);
-    background-size: cover;
-    background-position: center;
-    position: relative;
+* {
+    margin    : 0;
+    padding   : 0;
+    box-sizing: border-box;
 }
 
 .info-developer{
-	/*margin-left: 150vh;*/
+    margin-left: 170vh;
+}
+
+.month-budget{
+    height             : 45vh;
+    background-image   : linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.25)), url(cute-pink.jpg);
+    background-size    : cover;
+    background-position: center;
+    position           : relative;
+}
+
+.month-budget-description{
+    text-align : center;
+    color      : white;
+    text-indent: 50px;
+    font-family: "Arial", serif;
+    font-size  : 1.8em;
 }
 
 .enter-budget{
-    height: 10vh;
-/*    background-color:rgba(237, 140, 80, 0.2);*/
-    background-color:rgb(35, 55, 220);
-    opacity : 0.5;
+    height             : 10vh;
+    border             : 1px solid #e7e7e7;
+    background-color   : rgb(225, 224, 225);
+    opacity            : 0.2;
     background-position: center;
-    position: relative;
+    position           : relative;
+    margin: 0 auto;
+    text-align: center;
+}
+/*********************************************************************************/
+/**********************fix the input boxes position later*************************/
+/*********************************************************************************/
+/*.theButtomPart{
+    height             : 10vh;
+    border             : 1px solid #e7e7e7;
+    background-color   : rgb(225, 224, 225);
+    /*opacity            : 0.2;*/
+ /*   background-position: center;
+    position           : relative;
 }
 
-.budget-description{
+.enterItem{
+    margin-right : 10px;
+    border       : 1px solid #e7e7e7;
+    font-size    : 14px;
+    font-family  : inherit;
+    padding      : 12px 15px;
+    border-radius: 5px;
+    transition   : border 0.3s;
+}
 
+.enterItem{
+    width      : 400px; 
+    margin-bottom: 300vh;
+    margin-top: 2vh;
+
+}
+
+.enterMoneySpentOnTheItem{
+    width      : 100px;
+}
+.enter-budget-btn{
+}
+
+/*
+.add__btn {
+    font-size: 35px;
+    background: none;
+    border: none;
+    color: #28B9B5;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1.1;
+    margin-left: 10px;
+}
+*/
+.budget-description{
 }
