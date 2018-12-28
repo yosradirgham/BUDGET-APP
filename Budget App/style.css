@@ -1,13 +1,22 @@
 .month-budget{
-    height: 50vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(cute-pink.jpg);
+    height: 45vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.25)), url(cute-pink.jpg);
     background-size: cover;
     background-position: center;
     position: relative;
 }
 
-.enter-budget{
+.info-developer{
+	/*margin-left: 150vh;*/
+}
 
+.enter-budget{
+    height: 10vh;
+/*    background-color:rgba(237, 140, 80, 0.2);*/
+    background-color:rgb(35, 55, 220);
+    opacity : 0.5;
+    background-position: center;
+    position: relative;
 }
 
 .budget-description{
