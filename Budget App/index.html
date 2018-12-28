@@ -2,29 +2,33 @@
 <html>
 	<head>
 		<link type='text/css' rel='stylesheet' href='style.css'>
-		<link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 		<meta charset='UTF-8'>
 		<title>App name</title>
 	</head>	
 	<body>
 		<div class='month-budget'>
 			<div class='info-developer'>
-				<a href='https://www.linkedin.com/in/yosra-dirgham/'><i class="fab fa-linkedin"></i>LinkedIn</a>
-				<div class='instagram'><i class="fab fa-instagram"></i>Instagram Link</div>
+				<a href='https://www.linkedin.com/in/yosra-dirgham/'><i class="fab fa-linkedin"></i></a>
+				<a href='https://www.instagram.com/?hl=en' class='instagram'><i class="fab fa-instagram"></i></a>
 			</div>
-			<div class='date' id='date'>Date</div>
-			<div class='budget-title' id='budget-title'>Budget</div>
-			<div class='budget' id='budget'>Budget of the Month</div>
+			<div class='month-budget-description'>
+				<div class='date' id='date'>Date</div>
+				<div class='budget' id='budget'>Budget of the Month</div>
+				<div class='budget-title' id='budget-title'>Budget</div>
+			</div>	
 		</div>
-		<div class='enter-budget'>
-			<input  type='number' class='enterMoneySpentOnTheItem' name='enterMoneySpentOnTheItem'><br>
-			<input  type='text' class='enterItem' name='enterItem' ><br>
-			<button type='button'>button</button>
-		</div>
-		<div class='budget-description'>
-			<div class='income'>Income</div>
-			<div class='expenses'>Expenses</div>
-		</div>
+		<div class='theButtomPart'>
+			<div class='enter-budget'>
+				<input  type='number' class='enterMoneySpentOnTheItem' name='enterMoneySpentOnTheItem'><br>
+				<input  type='text' class='enterItem' name='enterItem' ><br>
+				<button type='button' class='enter-budget-btn'><i class="ion-ios-checkmark-outline"></i></button>
+			</div>
+		</div>	
+			<div class='budget-description'>
+				<div class='income'>Income</div>
+				<div class='expenses'>Expenses</div>
+			</div>
 		<script src='app.js'></script>
 	</body>
 </html>
