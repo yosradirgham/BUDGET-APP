@@ -2,16 +2,28 @@
 <html>
 	<head>
 		<link type='text/css' rel='stylesheet' href='style.css'>
+		<link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
 		<meta charset='UTF-8'>
-	</head>
+		<title>App name</title>
+	</head>	
 	<body>
 		<div class='month-budget'>
+			<div class='info-developer'>
+				<a href='https://www.linkedin.com/in/yosra-dirgham/'><i class="fab fa-linkedin"></i>LinkedIn</a>
+				<div class='instagram'><i class="fab fa-instagram"></i>Instagram Link</div>
+			</div>
+			<div class='date' id='date'>Date</div>
+			<div class='budget-title' id='budget-title'>Budget</div>
+			<div class='budget' id='budget'>Budget of the Month</div>
 		</div>
 		<div class='enter-budget'>
-			
+			<input  type='number' class='enterMoneySpentOnTheItem' name='enterMoneySpentOnTheItem'><br>
+			<input  type='text' class='enterItem' name='enterItem' ><br>
+			<button type='button'>button</button>
 		</div>
 		<div class='budget-description'>
-			
+			<div class='income'>Income</div>
+			<div class='expenses'>Expenses</div>
 		</div>
 		<script src='app.js'></script>
 	</body>
