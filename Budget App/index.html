@@ -9,8 +9,9 @@
 	<body>
 		<div class='month-budget'>
 			<div class='info-developer'>
-				<a href='https://www.linkedin.com/in/yosra-dirgham/'><i class="fab fa-linkedin"></i></a>
-				<a href='https://www.instagram.com/?hl=en' class='instagram'><i class="fab fa-instagram"></i></a>
+				<!-- choose the right fav icon for Safari and chrome -->
+				<a href='https://www.linkedin.com/in/yosra-dirgham/'><i class="fab fa-linkedin">linkedin</i></a>
+				<a href='https://www.instagram.com/?hl=en' class='instagram'><i class="fab fa-instagram">azdazd</i></a>
 			</div>
 			<div class='month-budget-description'>
 				<div class='date' id='date'>Date</div>
@@ -18,17 +19,21 @@
 				<div class='budget-title' id='budget-title'>Budget</div>
 			</div>	
 		</div>
-		<div class='theButtomPart'>
-			<div class='enter-budget'>
-				<input  type='number' class='enterMoneySpentOnTheItem' name='enterMoneySpentOnTheItem'><br>
-				<input  type='text' class='enterItem' name='enterItem' ><br>
-				<button type='button' class='enter-budget-btn'><i class="ion-ios-checkmark-outline"></i></button>
-			</div>
-		</div>	
-			<div class='budget-description'>
-				<div class='income'>Income</div>
-				<div class='expenses'>Expenses</div>
-			</div>
+
+		<div class='enter-budget'>
+			<select name='select' class='select'>
+				<option selected>+</option>
+				<option>-</option>
+			</select>
+			<input  type='text' class='enterItem' name='enterItem' ><br>	
+			<input  type='number' class='enterMoneySpentOnTheItem' name='enterMoneySpentOnTheItem'><br>		
+			<button type='button' class='enter-budget-btn'><img src='tick.jpg' width = '40'></button>
+		</div>
+			
+		<div class='budget-description'>
+			<div class='income'>Income</div>
+			<div class='expenses'>Expenses</div>
+		</div>
 		<script src='app.js'></script>
 	</body>
 </html>

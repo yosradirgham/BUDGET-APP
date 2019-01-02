@@ -1,13 +1,20 @@
+/******************************************/
+/*             The whole page             */
+/******************************************/
+
 * {
     margin    : 0;
     padding   : 0;
     box-sizing: border-box;
 }
 
+/******************************************/
+/*             The Top Part               */
+/******************************************/
+
 .info-developer{
     margin-left: 170vh;
 }
-
 .month-budget{
     height             : 45vh;
     background-image   : linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.25)), url(cute-pink.jpg);
@@ -24,63 +31,73 @@
     font-size  : 1.8em;
 }
 
+/******************************************/
+/*           The middle Part              */
+/******************************************/
+
 .enter-budget{
-    height             : 10vh;
-    border             : 1px solid #e7e7e7;
-    background-color   : rgb(225, 224, 225);
-    opacity            : 0.2;
-    background-position: center;
-    position           : relative;
-    margin: 0 auto;
+    text-align      : center;
+    padding         : 14px;
+    border-bottom   : 1px solid #e7e7e7;
+    background-color: #f7f7f7;
+    display         : flex;
+    opacity         : 0.6;
+}
+
+.select{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.25)), url(cute-pink.jpg);
+    width           : 60px;
+    margin-left     : 250px;
+    position        : absolute;
+    font-size       : 35px;
+}
+
+.enterItem,
+.enterMoneySpentOnTheItem{
+    border          : 1px solid #e7e7e7;
+    background-color: #fff;
+    color           : inherit;
+    font-family     : inherit;
+    font-size       : 14px;
+    padding         : 12px 15px;
+    margin-right    : 10px;
+    border-radius   : 5px;
+    transition      : border 0.3s;
+    margin-left     : 350px;
+}
+
+.enterItem { 
+    width     : 400px;
     text-align: center;
 }
-/*********************************************************************************/
-/**********************fix the input boxes position later*************************/
-/*********************************************************************************/
-/*.theButtomPart{
+
+.enterMoneySpentOnTheItem { 
+    width      : 100px;
+    margin-left:30px ;
+}
+
+.enter-budget-btn{
+    cursor: pointer;
+    font-size: 35px;
+    background: none;
+    border: none;
+    margin-left: 25px;
+}
+
+/******************************************/
+/*           The bottom Part              */
+/******************************************/
+
+/*
+.theButtomPart{
     height             : 10vh;
     border             : 1px solid #e7e7e7;
     background-color   : rgb(225, 224, 225);
     /*opacity            : 0.2;*/
- /*   background-position: center;
+   /* background-position: center;
     position           : relative;
 }
 
-.enterItem{
-    margin-right : 10px;
-    border       : 1px solid #e7e7e7;
-    font-size    : 14px;
-    font-family  : inherit;
-    padding      : 12px 15px;
-    border-radius: 5px;
-    transition   : border 0.3s;
-}
-
-.enterItem{
-    width      : 400px; 
-    margin-bottom: 300vh;
-    margin-top: 2vh;
-
-}
-
-.enterMoneySpentOnTheItem{
-    width      : 100px;
-}
-.enter-budget-btn{
-}
-
-/*
-.add__btn {
-    font-size: 35px;
-    background: none;
-    border: none;
-    color: #28B9B5;
-    cursor: pointer;
-    display: inline-block;
-    vertical-align: middle;
-    line-height: 1.1;
-    margin-left: 10px;
-}
 */
 .budget-description{
 }
