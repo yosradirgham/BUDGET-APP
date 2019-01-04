@@ -8,112 +8,139 @@
     box-sizing: border-box;
 }
 
+body {
+    color      : #555;
+    font-family: Open Sans;
+    font-size  : 16px;
+    position   : relative;
+    height     : 100vh;
+    font-weight: 400;
+}
+
 /******************************************/
 /*             The Top Part               */
 /******************************************/
 
-.info-developer{
-    margin-left: 170vh;
-}
 .month-budget{
-    height             : 45vh;
-    background-image   : linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.25)), url(cute-pink.jpg);
+    height             : 40vh;
+    background-image   : linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(flower.jpg);
     background-size    : cover;
     background-position: center;
     position           : relative;
 }
 
 .month-budget-description{
-    text-align : center;
-    color      : white;
-    text-indent: 50px;
-    font-family: "Arial", serif;
-    font-size  : 1.8em;
+    position : absolute;
+    width    : 350px;
+    top      : 50%;
+    left     : 50%;
+    transform: translate(-50%, -50%);
+    color    : #fff;
+}
+
+#budget-title{
+    font-size   : 18px; 
+    font-weight : 300px;
+    text-align  : center;
+    font-family : sans-serif;
+}
+
+#budget{
+    text-align     : center;
+    font-size      : 46px;
+    font-weight    : 300px;
+    font-family    : sans-serif;
+    letter-spacing : 2px;
+    padding-top    : 23px;
+
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.details-income{
+    text-align   :center;
+    font-size    : 16px;
+    margin-top   : 20px;
+    margin-bottom: 10px;
+    display      : wrap;
+}
+
+
+.budget-income,
+.budget-expnses{
+    text-align   : center;
+    font-size    : 18px;
+    padding      : 12px 0px 12px 0px;
+    margin-bottom: 10px;
+    display      : flex;
 }
 
 .budget-income{
-
+    background-color: #28B9B5; 
 }
 
 .budget-expnses{
-
+    background-color: #FF5049; 
 }
 
-.budget-expenses-text{
-
-}
-
+.budget-expenses-text,
 .budget-income-text{
-
+    font-size    : 18px;
+    color        : #444;
+    padding-left : 10px;
 }
 
-.income-value{
-
+.details-income .income-value,
+.details-income .expenses-value{
+    position      :absolute;
+    left          : 65%;
+    letter-spacing: 2px;
 }
-
-.income-percentage{
-
-}
-
-.something{
-
-}
-
-.alsoSomething{
-
-}
-
-.expenses-value{
-
-}
-
-.expenses-percentage{
-
-}
-
+ 
 /******************************************/
 /*           The middle Part              */
 /******************************************/
 
 .enter-budget{
-    text-align      : center;
     padding         : 14px;
     border-bottom   : 1px solid #e7e7e7;
     background-color: #f7f7f7;
     display         : flex;
-    opacity         : 0.6;
+    flex-wrap       : wrap;
+    justify-content : center;
 }
 
 .select{
-    background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.25)), url(cute-pink.jpg);
-    width           : 60px;
-    margin-left     : 250px;
-    position        : absolute;
-    font-size       : 35px;
+    width        : 50px;
+    font-size    : 18px;
+    margin-right : 14px;
 }
 
 .enterItem,
 .enterMoneySpentOnTheItem{
+    margin-right    : 14px;
     border          : 1px solid #e7e7e7;
     background-color: #fff;
     color           : inherit;
     font-family     : inherit;
     font-size       : 14px;
-    padding         : 12px 15px;
-    margin-right    : 10px;
     border-radius   : 5px;
     transition      : border 0.3s;
-    margin-left     : 350px;
 }
 
 .enterItem { 
     width     : 400px;
     text-align: center;
+    display:wrap;
 }
 
 .enterMoneySpentOnTheItem { 
     width      : 100px;
-    margin-left:30px ;
+   /* margin-left:30px ;*/
 }
 
 .enter-budget-btn{
@@ -121,7 +148,7 @@
     font-size: 35px;
     background: none;
     border: none;
-    margin-left: 25px;
+   /* margin-left: 25px;*/
 }
 
 /******************************************/
