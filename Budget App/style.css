@@ -115,6 +115,9 @@ body {
 }
 
 .select{
+    border       : 1px solid #e7e7e7;
+    height       : 44px;
+    color        : inherit;
     width        : 50px;
     font-size    : 18px;
     margin-right : 14px;
@@ -135,20 +138,18 @@ body {
 .enterItem { 
     width     : 400px;
     text-align: center;
-    display:wrap;
+    display   :wrap;
 }
 
 .enterMoneySpentOnTheItem { 
     width      : 100px;
-   /* margin-left:30px ;*/
 }
 
 .enter-budget-btn{
-    cursor: pointer;
-    font-size: 35px;
+    cursor    : pointer;
+    font-size : 35px;
     background: none;
-    border: none;
-   /* margin-left: 25px;*/
+    border    : none;
 }
 
 /******************************************/

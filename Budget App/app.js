@@ -1,6 +1,15 @@
 
+//the Date
 const d = new Date();
 const months = ['January','Febuary','Martch','April','May','June','July','August','September','October','November','December'];
+
+//available budget in ${month}
+document.querySelector('#budget-title').textContent = `Available budget in ${months[d.getMonth()]}`;
+
+//To do:
+// add an event handler in order to fetch the data the user enters, save it, and update the budget
+
+
 
 /*function getMonthString(d){
 	return months[d.getMonth()]
@@ -22,8 +31,7 @@ let getExpenses = arr[1];
 //let getExpenses = document.querySelector('.expenses-value').textContent;
 
 
-//available budget in ${month}
-document.querySelector('#budget-title').textContent = `Available budget in ${months[d.getMonth()]}`;
+
 
 //Month budget:
 //document.querySelector('.income-value').textContent = arr[1];
