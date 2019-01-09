@@ -2,10 +2,6 @@
 // Budget controller
 var budgetController = (function(){
 
-	var DOMStrings = {
-
-	};
-
 	var getDOMStrings = function(){
 		return DOMStrings;
 	};
@@ -26,7 +22,8 @@ var UIController = (function(){
 	var DOMStrings = {
 		inputSign : '.select',
 		inputItem : '.enterItem',
-		inputMoney: '.enterMoneySpentOnTheItem'
+		inputMoney: '.enterMoneySpentOnTheItem',
+		inputbtn  : '.enter-budget-btn'
 	};
 
 	//get input data
@@ -59,7 +56,6 @@ var UIController = (function(){
 var controller = (function(budgetCtrl, UICtrl){
 
 	var UIDomStrings = UIController.getDomStrings();
-	var budgetDomStrings = budgetController.getDomStrings();
 
 	var ctrlAddItem = function(){
 		//1. get input data
@@ -70,7 +66,7 @@ var controller = (function(budgetCtrl, UICtrl){
 	};	
 
 	//set up the event listener for the input button 
-	document.querySelector('.enter-budget-btn').addEventListener('click',ctrlAddItem);
+	document.querySelector(UIDomStrings.inputbtn).addEventListener('click',ctrlAddItem);
 	
 	//5. we want this to happen when the user hits the enter button, but also when he hits the enter key (on the keyboard)
 	document.addEventListener('keypress', function(e){
