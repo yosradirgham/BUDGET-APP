@@ -1,9 +1,23 @@
 
 // Budget controller
 var budgetController = (function(){
+
+	var DOMStrings = {
+
+	};
+
+	var getDOMStrings = function(){
+		return DOMStrings;
+	};
 	//update the budget
 	//update the income
 	//update the expense + percentage
+
+	return{
+		getDomStrings : function(){
+			getDOMStrings();
+		},
+	};
 })();
 
 // User Interface controller
@@ -16,25 +30,36 @@ var UIController = (function(){
 	};
 
 	//get input data
-	function getInputData(){
+	var getInputData = function(){
 		return{
 			sign : document.querySelector(DOMStrings.inputSign).value,
 			item : document.querySelector(DOMStrings.inputItem).value,
 			money: document.querySelector(DOMStrings.inputMoney).value
 		};
-	}
+	};
+
+	var getDOMStrings = function(){
+		return DOMStrings;//return our private DOMStrings so we can use it later on our controller <3
+	};
 
 	//add lists of incomes and expenses
 
 	return {
 		inputDataPublic : function(){
 			console.log(getInputData());
+		},
+
+		getDomStrings : function(){
+			getDOMStrings();
 		}
 	}
 })();
 
 // Global App Controller
 var controller = (function(budgetCtrl, UICtrl){
+
+	var UIDomStrings = UIController.getDomStrings();
+	var budgetDomStrings = budgetController.getDomStrings();
 
 	var ctrlAddItem = function(){
 		//1. get input data
