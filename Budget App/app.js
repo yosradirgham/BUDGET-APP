@@ -9,12 +9,18 @@ var budgetController = (function(){
 // User Interface controller
 var UIController = (function(){
 	
+	var DOMStrings = {
+		inputSign : '.select',
+		inputItem : '.enterItem',
+		inputMoney: '.enterMoneySpentOnTheItem'
+	};
+
 	//get input data
 	function getInputData(){
 		return{
-			sign : document.querySelector('.select').value,
-			item : document.querySelector('.enterItem').value,
-			money: document.querySelector('.enterMoneySpentOnTheItem').value
+			sign : document.querySelector(DOMStrings.inputSign).value,
+			item : document.querySelector(DOMStrings.inputItem).value,
+			money: document.querySelector(DOMStrings.inputMoney).value
 		};
 	}
 
