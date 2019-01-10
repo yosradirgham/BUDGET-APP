@@ -2,17 +2,11 @@
 // Budget controller
 var budgetController = (function(){
 
-	var getDOMStrings = function(){
-		return DOMStrings;
-	};
 	//update the budget
 	//update the income
 	//update the expense + percentage
 
 	return{
-		getDomStrings : function(){
-			getDOMStrings();
-		},
 	};
 })();
 
@@ -23,7 +17,7 @@ var UIController = (function(){
 		inputSign : '.select',
 		inputItem : '.enterItem',
 		inputMoney: '.enterMoneySpentOnTheItem',
-		inputbtn  : '.enter-budget-btn'
+		inputBtn  : '.enter-budget-btn',
 	};
 
 	//get input data
@@ -47,7 +41,7 @@ var UIController = (function(){
 		},
 
 		getDomStrings : function(){
-			getDOMStrings();
+			return getDOMStrings();
 		}
 	}
 })();
@@ -65,10 +59,8 @@ var controller = (function(budgetCtrl, UICtrl){
 		//4. add the item to the UI		
 	};	
 
-	//set up the event listener for the input button 
-	document.querySelector(UIDomStrings.inputbtn).addEventListener('click',ctrlAddItem);
-	
-	//5. we want this to happen when the user hits the enter button, but also when he hits the enter key (on the keyboard)
+	document.querySelector(UIDomStrings.inputBtn).addEventListener('click',ctrlAddItem);
+
 	document.addEventListener('keypress', function(e){
 		if(e.keyCode === 13){
 			ctrlAddItem();
