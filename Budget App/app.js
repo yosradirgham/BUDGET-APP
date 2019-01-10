@@ -20,32 +20,44 @@ var budgetController = (function(){
 	};
 
 
-	var budgetObj = {
+	var budget = {
 		allItems : {
 			exp : [],
 			inc : []
 		},
 
 		totalItems : {
-			totalExp : 0,
-			totalInc : 0
+			exp : 0,
+			inc : 0
 		},
 
-		budget : 0
+		totalBudget : 0
 	};
 
-	return {
-		getBudgetObj : function(){
-			return budgetObj;
-		},
-
-		getExpense : function(){
-			return new Expense();
-		},
-
-		getIncome : function(){
-			return new Income();
+	var getTotal = function(type){
+		var i =0, tot=0;
+		while(budget.allItems[type][i]){
+			tot += budget.allItems[type][i];
+			++i;
 		}
+		return tot;
+	}
+
+	return {
+		getBudgetObj : function(type, val){	
+			budget.allItems[type].push(parseInt(val));
+			budget.totalItems[type] = getTotal(type);
+			//prk ca n'a pas marché lorsque j'ai mis budget.totalBudget = budget.totalItems[inc]-budget.totalItems[exp];
+			budget.totalBudget = budget.totalItems.inc-budget.totalItems.exp;
+			return budget;
+		},
+
+		getInputExpInc : function(type, desc, val){
+			var id = 0;
+			if(type === 'exp') return new Expense(id, desc, val);
+			else if (type === 'inc') return new Income(id, desc, val);
+		},
+
 	};
 
 })();
@@ -81,7 +93,7 @@ var UIController = (function(){
 
 	return {
 		inputDataPublic : function(){ 
-			getInputData();
+			return getInputData();
 		},
 		
 		getDomStrings : function(){ 
@@ -97,6 +109,11 @@ var controller = (function(budgetCtrl, UICtrl){
 
 	var ctrlAddItem = function(){
 		UIController.inputDataPublic();
+		var type = UIController.inputDataPublic().sign;
+		var desc = UIController.inputDataPublic().item;
+		var val  = UIController.inputDataPublic().money;
+		budgetController.getInputExpInc(type, desc, val);
+		budgetController.getBudgetObj(type, val);
 	};	
 
 	//a function where all of our event listeners will be placed
