@@ -44,18 +44,25 @@ var budgetController = (function(){
 	}
 
 	return {
+
+		getInputExpInc : function(type, desc, val){
+			var newItem;
+			var id = budget.allItems[type].length;
+
+			if(type === 'exp') newItem = new Expense(id, desc, val);
+			else if (type === 'inc') newItem = new Income(id, desc, val);
+
+			budget.allItems[type].push(newItem);
+
+			return newItem;
+		},
+
 		getBudgetObj : function(type, val){	
 			budget.allItems[type].push(parseInt(val));
 			budget.totalItems[type] = getTotal(type);
 			//prk ca n'a pas marché lorsque j'ai mis budget.totalBudget = budget.totalItems[inc]-budget.totalItems[exp];
 			budget.totalBudget = budget.totalItems.inc-budget.totalItems.exp;
 			return budget;
-		},
-
-		getInputExpInc : function(type, desc, val){
-			var id = 0;
-			if(type === 'exp') return new Expense(id, desc, val);
-			else if (type === 'inc') return new Income(id, desc, val);
 		},
 
 	};
@@ -108,12 +115,18 @@ var UIController = (function(){
 var controller = (function(budgetCtrl, UICtrl){
 
 	var ctrlAddItem = function(){
-		UIController.inputDataPublic();
-		var type = UIController.inputDataPublic().sign;
-		var desc = UIController.inputDataPublic().item;
-		var val  = UIController.inputDataPublic().money;
-		budgetController.getInputExpInc(type, desc, val);
-		budgetController.getBudgetObj(type, val);
+		
+		//1. get input data
+		var input = UIController.inputDataPublic();
+		
+		//2.Add the item to the budget controller
+		budgetController.getInputExpInc(input.sign,input.item,input.money);
+
+
+		//3. Add item to the user interface 
+
+		//5. display the budget	
+		budgetController.getBudgetObj(input.sign,input.money);
 	};	
 
 	//a function where all of our event listeners will be placed
@@ -128,13 +141,6 @@ var controller = (function(budgetCtrl, UICtrl){
 		});
 	};
 
-	//1. get input data
-	
-	//2. update the budget, percentage of expenses, income or expenses depending on the sign the user entered
-
-	//3. display calculated data
-
-	//4. add the item to the UI	
 	
 	return {
 
