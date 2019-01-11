@@ -75,11 +75,12 @@ var UIController = (function(){
 	
 	var DOMStrings = {
 
-		inputSign : ".select",
-		inputItem : ".enterItem",
-		inputMoney: ".enterMoneySpentOnTheItem",
-		inputBtn  : ".enter__budget__btn"
-	
+		inputSign   : ".select",
+		inputItem   : ".enterItem",
+		inputMoney  : ".enterMoneySpentOnTheItem",
+		inputBtn    : ".enter__budget__btn",
+		incomeList  : ".inc__list",
+		expensesList: ".exp__list"	
 	};
 
 	var getInputData = function(){
@@ -99,15 +100,19 @@ var UIController = (function(){
 	};
 
 	var addListItem = function(obj, type){
-		var html;
+		var html, newHTML, element;
 
 		// Create HTML string with a placeholder text
-		type === 'inc' ? html = '<div class="inc__item"><div class="item__description">Salary</div><div class="item__value">+1200.00 $</div><button class="item__delete__item"><img src="delete-Icon.png" width="20"></button></div>' : html = '<div class="exp__item"><div class="item__description">Rent</div><div class="item__value">-254.00 $ </div><div class="item__percentage"> 21.34 %</div><button class="item__delete__item"><img src="delete-Icon.png" width="20"></button></div>';
-		
+		type === 'inc' ? html = '<div class="inc__item__%id%"><div class="item__description">%description%</div><div class="item__value">%value%</div><button class="item__delete__item"><img src="delete-Icon.png" width="20"></button></div>' : html = '<div class="exp__item__%id%"><div class="item__description">%description%</div><div class="item__value">%value%</div><div class="item__percentage">%percentage%</div><button class="item__delete__item"><img src="delete-Icon.png" width="20"></button></div>';
+		type === 'inc' ? element = DOMStrings.incomeList : element = DOMStrings.expensesList;
 
 		// Replace the placeholder text with some actual data
+		newHTML = html.replace('%id%',obj.id);
+		newHTML = newHTML.replace('%description%',obj.description);
+		newHTML = newHTML.replace('%value%',obj.value).
 
 		// Insert the HTML into the DOM
+		document.querySelector(element).insertAdjacentHTML('beforeend', newHTML);
 	};
 
 	return {
