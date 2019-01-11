@@ -75,10 +75,10 @@ var UIController = (function(){
 	
 	var DOMStrings = {
 
-		inputSign : '.select',
-		inputItem : '.enterItem',
-		inputMoney: '.enterMoneySpentOnTheItem',
-		inputBtn  : '.enter-budget-btn'
+		inputSign : ".select",
+		inputItem : ".enterItem",
+		inputMoney: ".enterMoneySpentOnTheItem",
+		inputBtn  : ".enter__budget__btn"
 	
 	};
 
@@ -96,6 +96,18 @@ var UIController = (function(){
 		
 		return DOMStrings;//return our private DOMStrings so we can use it later on our controller <3
 	
+	};
+
+	var addListItem = function(obj, type){
+		var html;
+
+		// Create HTML string with a placeholder text
+		type === 'inc' ? html = '<div class="inc__item"><div class="item__description">Salary</div><div class="item__value">+1200.00 $</div><button class="item__delete__item"><img src="delete-Icon.png" width="20"></button></div>' : html = '<div class="exp__item"><div class="item__description">Rent</div><div class="item__value">-254.00 $ </div><div class="item__percentage"> 21.34 %</div><button class="item__delete__item"><img src="delete-Icon.png" width="20"></button></div>';
+		
+
+		// Replace the placeholder text with some actual data
+
+		// Insert the HTML into the DOM
 	};
 
 	return {
@@ -117,19 +129,32 @@ var controller = (function(budgetCtrl, UICtrl){
 	var ctrlAddItem = function(){
 		
 		//1. get input data
+		/*
+		input variabe contains the input data that the user enters, which are : sign, description of the Item, and the value
+		*/
 		var input = UIController.inputDataPublic();
 		
+
 		//2.Add the item to the budget controller
-		budgetController.getInputExpInc(input.sign,input.item,input.money);
+		/* 
+		creates a new item that could either be an income or an expense
+		inserts the created Item (object Income/Expense) into budget.allItems[type]
+		returns the created Item: variable item holds object budget, with entered data
+		*/
+		var item = budgetController.getInputExpInc(input.sign,input.item,input.money);
 
 
 		//3. Add item to the user interface 
+		
 
 		//5. display the budget	
 		budgetController.getBudgetObj(input.sign,input.money);
 	};	
 
-	//a function where all of our event listeners will be placed
+
+	/*
+	a function where all of our event listeners will be placed
+	*/
 	var setUpEventListeners = function(){
 		var UIDomStrings = UIController.getDomStrings();
 		

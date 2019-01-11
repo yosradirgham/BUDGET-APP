@@ -1,49 +1,107 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link type='text/css' rel='stylesheet' href='style.css'>
+		<link type="text/css" rel="stylesheet" href="style.css">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-		<meta charset='UTF-8'>
+		<meta charset="UTF-8">
 		<title>App name</title>
 	</head>	
 	<body>
-		<div class='month-budget'>
-			<div class='info-developer'>
-				<a href='https://www.linkedin.com/in/yosra-dirgham/'><i class="fab fa-linkedin">linkedin</i></a>
+
+		<div class="month__budget">
+		
+			<div class="info__developer">
+				<a href="https://www.linkedin.com/in/yosra-dirgham/""><i class="fab fa-linkedin">linkedin</i></a>
 			</div>
-			<div class='month-budget-description'>
-				<!--<div class='date' id='date'>Date</div>-->
-				<div class='budget-title' id='budget-title'>budget</div>
-				<div class='budget' id='budget'>45,677.00</div>
-				<div class='details-income'>
-					<div class='budget-income clearfix' >
-						<div class='budget-income-text'>Income</div>
-						<div class="income-value">+ 0.00</div>
-                       	<div class="income-percentage">&nbsp;</div>
+		
+			<div class="budget__description">
+				<div class="budget__title" id="budget__title">budget</div>
+				<div class="budget" id="budget">45,677.00</div>
+				
+				<div class="details__income">
+					<div class="budget__income clearfix" >
+						<div class="budget__income__text">Income</div>
+						<div class="income__value">+ 0.00</div>
+                       	<div class="income__percentage">&nbsp;</div>
 					</div>
-					<div class='budget-expnses clearfix'>
-						<div class='budget-expenses-text'>Expenses</div>
-						<div class="expenses-value">- 0.00</div>
-                       	<div class="expenses-percentage">&nbsp;</div>
+				
+					<div class="budget__expnses clearfix">
+						<div class="budget__expenses__text">Expenses</div>
+						<div class="expenses__value">- 0.00</div>
+                       	<div class="expenses__percentage">&nbsp;</div>
 					</div>
 				</div>
+
 			</div>	
 		</div>
 
-		<div class='enter-budget'>
-			<select name='select' class='select'>
+		<div class="enter__budget">
+			<select name="select" class="select">
 				<option value="inc" selected>+</option>
 				<option value="exp">-</option>
 			</select>
-			<input  type='text' class='enterItem' name='enterItem'><br>	
-			<input  type='number' class='enterMoneySpentOnTheItem' name='enterMoneySpentOnTheItem'><br>		
-			<button type='button' class='enter-budget-btn'><img src='tick.jpg' width = '40'></button>
+			
+			<input  type="text" class="enterItem" name="enterItem"><br>	
+			<input  type="number" class="enterMoneySpentOnTheItem" name="enterMoneySpentOnTheItem"><br>		
+			
+			<button type="button" class="enter__budget__btn"><img src="tick.jpg" width = "40"></button>
 		</div>
 			
-		<div class='budget-description'>
-			<div class='income'>Income</div>
-			<div class='expenses'>Expenses</div>
+		<div class="container">
+
+			<div class="income">
+				<h2 class="inc__title">Income</h2>
+			
+				<div class="inc__list">
+					<div class="inc__item">
+					<!--<div class="item__description">Salary</div>
+						<div class="item__value">+1200.00 $</div>
+						<button class="item__delete__item">
+							<img src="delete-Icon.png" width="20">
+						</button>-->
+					</div>
+				</div>
+
+			</div>
+
+			<div class="expenses">
+				<h2 class="exp__title">Expenses</h2>
+			
+				<div class="exp__list">
+					<div class="exp__item">
+						<!--<div class="item__description">Rent</div>
+						<div class="item__value">-254.00 $ </div>
+						<div class="item__percentage"> 21.34 %</div>
+						<button class="item__delete__item">
+								<img src="delete-Icon.png" width="20">
+						</button>-->
+					</div>	
+				</div>
+
+			</div>
 		</div>
-		<script src='app.js'></script>
+
+		<script src="app.js"></script>
+	
 	</body>
+
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

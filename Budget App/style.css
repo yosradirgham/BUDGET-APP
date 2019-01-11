@@ -21,7 +21,7 @@ body {
 /*             The Top Part               */
 /******************************************/
 
-.month-budget{
+.month__budget{
     height             : 40vh;
     background-image   : linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(flower.jpg);
     background-size    : cover;
@@ -29,7 +29,7 @@ body {
     position           : relative;
 }
 
-.month-budget-description{
+.budget__description{
     position : absolute;
     width    : 350px;
     top      : 50%;
@@ -38,7 +38,7 @@ body {
     color    : #fff;
 }
 
-#budget-title{
+#budget__title{
     font-size   : 18px; 
     font-weight : 300px;
     text-align  : center;
@@ -70,8 +70,8 @@ body {
 }
 
 
-.budget-income,
-.budget-expnses{
+.budget__income,
+.budget__expnses{
     text-align   : center;
     font-size    : 18px;
     padding      : 12px 0px 12px 0px;
@@ -79,23 +79,23 @@ body {
     display      : flex;
 }
 
-.budget-income{
+.budget__income{
     background-color: #28B9B5; 
 }
 
-.budget-expnses{
+.budget__expnses{
     background-color: #FF5049; 
 }
 
-.budget-expenses-text,
-.budget-income-text{
+.budget__expenses__text,
+.budget__income__text{
     font-size    : 18px;
     color        : #444;
     padding-left : 10px;
 }
 
-.details-income .income-value,
-.details-income .expenses-value{
+.details__income .income__value,
+.details__income .expenses__value{
     position      :absolute;
     left          : 65%;
     letter-spacing: 2px;
@@ -105,7 +105,7 @@ body {
 /*           The middle Part              */
 /******************************************/
 
-.enter-budget{
+.enter__budget{
     padding         : 14px;
     border-bottom   : 1px solid #e7e7e7;
     background-color: #f7f7f7;
@@ -145,7 +145,7 @@ body {
     width      : 100px;
 }
 
-.enter-budget-btn{
+.enter__budget__btn{
     cursor    : pointer;
     font-size : 35px;
     background: none;
@@ -156,16 +156,21 @@ body {
 /*           The bottom Part              */
 /******************************************/
 
-/*
-.theButtomPart{
-    height             : 10vh;
-    border             : 1px solid #e7e7e7;
-    background-color   : rgb(225, 224, 225);
-    /*opacity            : 0.2;*/
-   /* background-position: center;
-    position           : relative;
+
+.container{
+    position : absolute;
+    width    : 350px;
+    top      : 60%;
+    left     : 50%;
+    transform: translate(-50%, -50%);
+    color    : black;
+    display  : flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-*/
-.budget-description{
+.income{
 }
+
+
+
