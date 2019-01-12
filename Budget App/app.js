@@ -28,18 +28,33 @@ var budgetController = (function(){
 		percentage : '--'
 	};
 
+	var getNewTotal = function(budget){
+		var tot = 0, tot1=0;
+		
+		for(let i in budget.allItems.inc){
+			tot += budget.allItems.inc.i.value;
+		}
+		budget.totalItems.inc = tot;
+
+		for(let i of budget.allItems.exp){
+			tot1 += budget.allItems.exp[i].value;
+		}
+		budget.totalItems.exp = tot1;
+
+		budget.totBudget = getTotalIncomes(budget)-getTotalExpenses(budget);
+
+		budget.totBudget > 0 ? budget.percentage = `${Math.round(budget.totalItems.exp/(budget.totBudget)*100,2)}%` : budget.percentage = '--';
+	};
+
 	var getTotals = function(budget, type, value){
 		var difference;
 		type === 'inc' ? budget.totalItems.inc += value : budget.totalItems.exp += value;
 		difference = budget.totalItems.inc-budget.totalItems.exp;
 		difference < 0 ? budget.totBudget = 0 : budget.totBudget = difference;
 		budget.totBudget > 0 ? budget.percentage = `${Math.round(budget.totalItems.exp/(budget.totBudget)*100,2)}%` : budget.percentage = '--';
-		console.log(budget);
-		return budget;
-	
+		
+		return budget;	
 	};
-
-
 
 	return {
 
@@ -59,6 +74,10 @@ var budgetController = (function(){
 
 		getTotalExpInc : function(budget, type, value){
 			return getTotals(budget, type, value);
+		},
+
+		getNewTotal : function(budget){
+			return getNewTotal(budget);
 		}
 
 
@@ -169,7 +188,6 @@ var controller = (function(budgetCtrl, UICtrl){
 		var budgetObj,budget;
 
 		budgetObj =	budgetCtrl.getBudgetObj();
-		console.log(`budgetObj: ${budgetObj.allItems[input.sign][0]}`);
 		budget = budgetCtrl.getTotalExpInc(budgetObj, input.sign, input.money);
 		
 		//DOM manipulation
@@ -203,20 +221,17 @@ var controller = (function(budgetCtrl, UICtrl){
 	var ctrlDeleteItem = function(event){
 		var item, identifier, obj, type, index;
 
-		//1. Fetch the Id corresponding to out target element
+		//1. Fetch the Id, type corresponding to out target element
 		item = event.target.parentNode.parentNode.id;
+		identifier = item.slice(11,14);
+		type = item.slice(0,3);
 
 		//2. Delete the element from the UI
 		if(item){
 			document.getElementById(item).remove();
 		}
 
-		//3. Update the budget and ( Income Or Expenses)
-
-		//4. Delete the element from the data structure
-		identifier = item.slice(11,14);
-		type = item.slice(0,3);
-
+		//3. Delete the element from the data structure
 		obj = budgetCtrl.getBudgetObj();
 
 		obj.allItems[type].forEach(x => {
@@ -229,6 +244,12 @@ var controller = (function(budgetCtrl, UICtrl){
 			}
 		});
 
+		//4. Update the budget and ( Income Or Expenses)
+/* 
+	Not working
+ 	should update the budget
+ */		
+		budgetCtrl.getNewTotal(obj);
 
 	};	
 	
