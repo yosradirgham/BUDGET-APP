@@ -38,14 +38,14 @@ body {
     color    : #fff;
 }
 
-#budget__title{
+.budget__title{
     font-size   : 18px; 
     font-weight : 300px;
     text-align  : center;
     font-family : sans-serif;
 }
 
-#budget{
+.budget{
     text-align     : center;
     font-size      : 46px;
     font-weight    : 300px;

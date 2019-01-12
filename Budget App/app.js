@@ -80,7 +80,8 @@ var UIController = (function(){
 		expensesList: '.exp__list',
 		budget      : '.budget',
 		income      : '.income__value',
-		expenses    : '.expenses__value'	
+		expenses    : '.expenses__value',
+		container   : '.container'	
 	};
 
 	var getInputData = function(){
@@ -103,7 +104,7 @@ var UIController = (function(){
 		var html, newHTML, element;
 
 		// Create HTML string with a placeholder text
-		type === 'inc' ? html = '<div class="inc__item__%id%"><div class="item__description">%description%</div><div class="item__value">%value%</div><button class="item__delete__item"><img src="delete-Icon.png" width="20"></button></div>' : html = '<div class="exp__item__%id%"><div class="item__description">%description%</div><div class="item__value">%value%</div><div class="item__percentage">%percentage%</div><button class="item__delete__item"><img src="delete-Icon.png" width="20"></button></div>';
+		type === 'inc' ? html = '<div id="inc__item__%id%"><div class="item__description">%description%</div><div class="item__value">%value%</div><button class="item__delete__item"><img src="delete-Icon.png" width="20"></button></div>' : html = '<div id="exp__item__%id%"><div class="item__description">%description%</div><div class="item__value">%value%</div><div class="item__percentage">%percentage%</div><button class="item__delete__item"><img src="delete-Icon.png" width="20"></button></div>';
 		type === 'inc' ? element = DOMStrings.incomeList : element = DOMStrings.expensesList;
 
 		// Replace the placeholder text with some actual data
@@ -138,6 +139,7 @@ var UIController = (function(){
 		clearInputFields : function(){
 			return clearFields();
 		}
+
 	}
 
 })();
@@ -153,10 +155,13 @@ var controller = (function(budgetCtrl, UICtrl){
 	var setUpEventListeners = function(){		
 		document.querySelector(UIDomStrings.inputBtn).addEventListener('click',ctrlAddItem);
 
-		document.addEventListener('keypress', function(e){
+		document.addEventListener('keypress', function(event){
 			//using which proprety for old browsers
-			if(e.keyCode === 13 || e.which === 13) ctrlAddItem();
+			if(event.keyCode === 13 || event.which === 13) ctrlAddItem();
 		});
+
+		// Event handler for the delete button that is associated to each one of our items listed on our web page
+		document.querySelector(UIDomStrings.container).addEventListener('click', ctrlDeleteItem);
 	};
 
 
@@ -186,12 +191,30 @@ var controller = (function(budgetCtrl, UICtrl){
 			//3. Add item to the user interface 
 			UICtrl.displayItemOnList(item, input.sign);
 			
-			//3'. clear input fields
+			//4. clear input fields
 			UIController.clearInputFields();
 			
-			//4. display the budget	
+			//5. display the budget	
 			displayBudget(input);	
 		}
+	};
+
+	var ctrlDeleteItem = function(event){
+		var item;
+
+		//1. Fetch the Id corresponding to out target element
+		item = event.target.parentNode.parentNode.id;
+
+		//2. Delete the element from the UI
+		if(item){
+			document.getElementById(item).remove();
+		}
+
+		//3. Delete the element from the data structure
+
+		//4. Update the budget and ( Income Or Expenses)
+
+
 	};	
 	
 	return {
