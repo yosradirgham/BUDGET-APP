@@ -123,8 +123,8 @@ body {
     margin-right : 14px;
 }
 
-.enterItem,
-.enterMoneySpentOnTheItem{
+.enter__Item,
+.enter__value{
     margin-right    : 14px;
     border          : 1px solid #e7e7e7;
     background-color: #fff;
@@ -135,14 +135,15 @@ body {
     transition      : border 0.3s;
 }
 
-.enterItem { 
+.enter__Item { 
     width     : 400px;
     text-align: center;
     display   :wrap;
 }
 
-.enterMoneySpentOnTheItem { 
+.enter__value { 
     width      : 100px;
+    text-align: center;
 }
 
 .enter__budget__btn{

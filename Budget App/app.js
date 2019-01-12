@@ -23,11 +23,18 @@ var budgetController = (function(){
 			exp : 0,
 			inc : 0
 		},
+
+		totBudget : 0,
+		percentage : '--'
 	};
 
 	var getTotals = function(budget, type, value){
-
+		var difference;
 		type === 'inc' ? budget.totalItems.inc += value : budget.totalItems.exp += value;
+		difference = budget.totalItems.inc-budget.totalItems.exp;
+		difference < 0 ? budget.totBudget = 0 : budget.totBudget = difference;
+		budget.totBudget > 0 ? budget.percentage = `${Math.round(budget.totalItems.exp/(budget.totBudget)*100,2)}%` : budget.percentage = '--';
+		console.log(budget);
 		return budget;
 	
 	};
@@ -39,11 +46,10 @@ var budgetController = (function(){
 		getInputExpInc : function(type, desc, val){
 			var newItem, id;
 			budget.allItems[type] == 'undefined' ? id = 0 : id = budget.allItems[type].length;
-
+		
 			type === 'inc'? newItem = new Income(id, desc, val) : newItem = new Expense(id, desc, val);
 
 			budget.allItems[type].push(newItem);
-			console.log(budget.allItems[type]);
 			return newItem;
 		},
 
@@ -67,8 +73,8 @@ var UIController = (function(){
 	var DOMStrings = {
 
 		inputSign   : '.select',
-		inputItem   : '.enterItem',
-		inputMoney  : '.enterMoneySpentOnTheItem',
+		inputItem   : '.enter__Item',
+		inputMoney  : '.enter__value',
 		inputBtn    : '.enter__budget__btn',
 		incomeList  : '.inc__list',
 		expensesList: '.exp__list',
@@ -82,7 +88,7 @@ var UIController = (function(){
 		return{
 			sign : document.querySelector(DOMStrings.inputSign).value,
 			item : document.querySelector(DOMStrings.inputItem).value,
-			money: parseInt(document.querySelector(DOMStrings.inputMoney).value)
+			money: parseFloat(document.querySelector(DOMStrings.inputMoney).value)
 		};
 
 	};
@@ -109,6 +115,13 @@ var UIController = (function(){
 		document.querySelector(element).insertAdjacentHTML('beforeend', newHTML);
 	};
 
+	// Clear input field on our web page once the user enter his data and hits the approval button
+	var clearFields = function(){
+		var fields = document.querySelectorAll(`${DOMStrings.inputItem},${DOMStrings.inputMoney}`); //returns a nodeList
+		Array.from(fields).forEach( x => x.value = "");
+	};
+
+
 	return {
 		inputDataPublic : function(){ 
 			return getInputData();
@@ -120,6 +133,10 @@ var UIController = (function(){
 
 		displayItemOnList : function(obj,type){
 			return addListItem(obj,type);
+		},
+
+		clearInputFields : function(){
+			return clearFields();
 		}
 	}
 
@@ -128,59 +145,63 @@ var UIController = (function(){
 
 // Global App Controller
 var controller = (function(budgetCtrl, UICtrl){
-
-	var ctrlAddItem = function(){
-		var UIDomStrings = UIController.getDomStrings();
-
-		//1. get input data
-		/*
-		input variabe contains the input data that the user enters, which are : sign, description of the Item, and the value
-		*/
-		var input = UICtrl.inputDataPublic();
-		console.log(input);
-		
-		//2.Add the item to the budget controller
-		/* 
-		creates a new item that could either be an income or an expense
-		inserts the created Item (object Income/Expense) into budget.allItems[type]
-		returns the created Item: variable item holds object budget, with entered data
-		*/
-		var item = budgetCtrl.getInputExpInc(input.sign,input.item,input.money);
-		
-		
-		//3. Add item to the user interface 
-		UICtrl.displayItemOnList(item, input.sign);
-		
-		
-		//4. display the budget	
-		var budgetObj =	budgetCtrl.getBudgetObj();
-		var budget = budgetCtrl.getTotalExpInc(budgetObj, input.sign, input.money);
-		document.querySelector(UIDomStrings.budget).textContent = budget.totalItems.inc - budget.totalItems.exp;
-		document.querySelector(UIDomStrings.income).textContent = budget.totalItems.inc;
-		document.querySelector(UIDomStrings.expenses).textContent = budget.totalItems.exp;
-
-	};	
-
+	var UIDomStrings = UIController.getDomStrings();
 
 	/*
 	a function where all of our event listeners will be placed
 	*/
-	var setUpEventListeners = function(){
-		var UIDomStrings = UIController.getDomStrings();
-		
+	var setUpEventListeners = function(){		
 		document.querySelector(UIDomStrings.inputBtn).addEventListener('click',ctrlAddItem);
-		
+
 		document.addEventListener('keypress', function(e){
 			//using which proprety for old browsers
 			if(e.keyCode === 13 || e.which === 13) ctrlAddItem();
 		});
 	};
 
+
+	var displayBudget = function(input){
+		var budgetObj,budget;
+
+		budgetObj =	budgetCtrl.getBudgetObj();
+		budget = budgetCtrl.getTotalExpInc(budgetObj, input.sign, input.money);
+		
+		//DOM manipulation
+		document.querySelector(UIDomStrings.budget).textContent = budget.totBudget;//totalItems.inc - budget.totalItems.exp;
+		document.querySelector(UIDomStrings.income).textContent = budget.totalItems.inc;
+		document.querySelector(UIDomStrings.expenses).textContent = budget.totalItems.exp;
+	};
+
+
+	var ctrlAddItem = function(){
+		//1. get input data
+		var input = UICtrl.inputDataPublic();
+
+		if(input.item != "" && !isNaN(input.money) && input.money > 0){
+		
+			//2.Add the item to the budget controller
+			var item = budgetCtrl.getInputExpInc(input.sign,input.item,input.money);
+			
+			
+			//3. Add item to the user interface 
+			UICtrl.displayItemOnList(item, input.sign);
+			
+			//3'. clear input fields
+			UIController.clearInputFields();
+			
+			//4. display the budget	
+			displayBudget(input);	
+		}
+	};	
 	
 	return {
 
 		init : function(){
 			setUpEventListeners();
+			document.querySelector(UIDomStrings.budget).textContent = 0;
+			document.querySelector(UIDomStrings.income).textContent = 0;
+			document.querySelector(UIDomStrings.expenses).textContent = 0;
+
 		}
 
 	};
