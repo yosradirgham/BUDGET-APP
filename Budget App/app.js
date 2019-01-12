@@ -19,11 +19,10 @@ var budgetController = (function(){
 		this.value       = value;
 	};
 
-
 	var budget = {
 		allItems : {
-			exp : [],
-			inc : []
+			exp : [],//whose type is Expense(id, desc, val)
+			inc : [] //whose type is Income (id, desc, val)
 		},
 
 		totalItems : {
@@ -57,13 +56,13 @@ var budgetController = (function(){
 			return newItem;
 		},
 
-		getBudgetObj : function(type, val){	
-			budget.allItems[type].push(parseInt(val));
-			budget.totalItems[type] = getTotal(type);
+		//getBudgetObj : function(type, val){	
+			//budget.allItems[type].push(parseInt(val));
+			//budget.totalItems[type] = getTotal(type);
 			//prk ca n'a pas marché lorsque j'ai mis budget.totalBudget = budget.totalItems[inc]-budget.totalItems[exp];
-			budget.totalBudget = budget.totalItems.inc-budget.totalItems.exp;
-			return budget;
-		},
+			//budget.totalBudget = budget.totalItems.inc-budget.totalItems.exp;
+			//return budget;
+		//},
 
 	};
 
@@ -75,12 +74,12 @@ var UIController = (function(){
 	
 	var DOMStrings = {
 
-		inputSign   : ".select",
-		inputItem   : ".enterItem",
-		inputMoney  : ".enterMoneySpentOnTheItem",
-		inputBtn    : ".enter__budget__btn",
-		incomeList  : ".inc__list",
-		expensesList: ".exp__list"	
+		inputSign   : '.select',
+		inputItem   : '.enterItem',
+		inputMoney  : '.enterMoneySpentOnTheItem',
+		inputBtn    : '.enter__budget__btn',
+		incomeList  : '.inc__list',
+		expensesList: '.exp__list'	
 	};
 
 	var getInputData = function(){
@@ -105,11 +104,13 @@ var UIController = (function(){
 		// Create HTML string with a placeholder text
 		type === 'inc' ? html = '<div class="inc__item__%id%"><div class="item__description">%description%</div><div class="item__value">%value%</div><button class="item__delete__item"><img src="delete-Icon.png" width="20"></button></div>' : html = '<div class="exp__item__%id%"><div class="item__description">%description%</div><div class="item__value">%value%</div><div class="item__percentage">%percentage%</div><button class="item__delete__item"><img src="delete-Icon.png" width="20"></button></div>';
 		type === 'inc' ? element = DOMStrings.incomeList : element = DOMStrings.expensesList;
+		//console.log(element);
+		//console.log(`obj.value: ${obj.value}`);
 
 		// Replace the placeholder text with some actual data
 		newHTML = html.replace('%id%',obj.id);
 		newHTML = newHTML.replace('%description%',obj.description);
-		newHTML = newHTML.replace('%value%',obj.value).
+		newHTML = newHTML.replace('%value%',parseInt(obj.value));
 
 		// Insert the HTML into the DOM
 		document.querySelector(element).insertAdjacentHTML('beforeend', newHTML);
@@ -122,6 +123,10 @@ var UIController = (function(){
 		
 		getDomStrings : function(){ 
 			return getDOMStrings();
+		},
+
+		displayItemOnList : function(obj,type){
+			return addListItem(obj,type);
 		}
 	}
 
@@ -137,8 +142,8 @@ var controller = (function(budgetCtrl, UICtrl){
 		/*
 		input variabe contains the input data that the user enters, which are : sign, description of the Item, and the value
 		*/
-		var input = UIController.inputDataPublic();
-		
+		var input = UICtrl.inputDataPublic();
+		console.log(input);
 
 		//2.Add the item to the budget controller
 		/* 
@@ -146,14 +151,14 @@ var controller = (function(budgetCtrl, UICtrl){
 		inserts the created Item (object Income/Expense) into budget.allItems[type]
 		returns the created Item: variable item holds object budget, with entered data
 		*/
-		var item = budgetController.getInputExpInc(input.sign,input.item,input.money);
-
-
+		var item = budgetCtrl.getInputExpInc(input.sign,input.item,input.money);
+		console.log(item);
+		console.log(`input sign: ${input.sign}`);
 		//3. Add item to the user interface 
-		
-
+		var list = UICtrl.displayItemOnList(item, input.sign);
+		console.log(list);
 		//5. display the budget	
-		budgetController.getBudgetObj(input.sign,input.money);
+		//budgetController.getBudgetObj(input.sign,input.money);
 	};	
 
 
