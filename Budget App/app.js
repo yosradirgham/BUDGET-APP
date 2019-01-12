@@ -29,40 +29,44 @@ var budgetController = (function(){
 			exp : 0,
 			inc : 0
 		},
-
-		totalBudget : 0
 	};
 
-	var getTotal = function(type){
-		var i =0, tot=0;
-		while(budget.allItems[type][i]){
-			tot += budget.allItems[type][i];
-			++i;
+
+	var totalExp=0, totalInc=0, total=0;
+	var getTotals = function(budget, type, value){
+		if(type === 'inc'){
+			console.log(`value: ${value}`);
+			budget.totalItems.inc += value;
 		}
-		return tot;
-	}
+		else{
+			budget.totalItems.exp += value;			
+		}
+		return budget;
+	};
+
+
 
 	return {
 
 		getInputExpInc : function(type, desc, val){
-			var newItem;
-			var id = budget.allItems[type].length;
+			var newItem, id;
+			budget.allItems[type] == 'undefined' ? id = 0 : id = budget.allItems[type].length;
 
-			if(type === 'exp') newItem = new Expense(id, desc, val);
-			else if (type === 'inc') newItem = new Income(id, desc, val);
+			type === 'inc'? newItem = new Income(id, desc, val) : newItem = new Expense(id, desc, val);
 
 			budget.allItems[type].push(newItem);
-
+			console.log(budget.allItems[type]);
 			return newItem;
 		},
 
-		//getBudgetObj : function(type, val){	
-			//budget.allItems[type].push(parseInt(val));
-			//budget.totalItems[type] = getTotal(type);
-			//prk ca n'a pas marché lorsque j'ai mis budget.totalBudget = budget.totalItems[inc]-budget.totalItems[exp];
-			//budget.totalBudget = budget.totalItems.inc-budget.totalItems.exp;
-			//return budget;
-		//},
+		getBudgetObj : function(){
+			return budget;
+		},
+
+		getTotalExpInc : function(budget, type, value){
+			return getTotals(budget, type, value);
+		}
+
 
 	};
 
@@ -79,7 +83,10 @@ var UIController = (function(){
 		inputMoney  : '.enterMoneySpentOnTheItem',
 		inputBtn    : '.enter__budget__btn',
 		incomeList  : '.inc__list',
-		expensesList: '.exp__list'	
+		expensesList: '.exp__list',
+		budget : '.budget',
+		income : '.income__value',
+		expenses : '.expenses__value'	
 	};
 
 	var getInputData = function(){
@@ -87,7 +94,7 @@ var UIController = (function(){
 		return{
 			sign : document.querySelector(DOMStrings.inputSign).value,
 			item : document.querySelector(DOMStrings.inputItem).value,
-			money: document.querySelector(DOMStrings.inputMoney).value
+			money: parseInt(document.querySelector(DOMStrings.inputMoney).value)
 		};
 
 	};
@@ -137,14 +144,15 @@ var UIController = (function(){
 var controller = (function(budgetCtrl, UICtrl){
 
 	var ctrlAddItem = function(){
-		
+		var UIDomStrings = UIController.getDomStrings();
+
 		//1. get input data
 		/*
 		input variabe contains the input data that the user enters, which are : sign, description of the Item, and the value
 		*/
 		var input = UICtrl.inputDataPublic();
 		console.log(input);
-
+		
 		//2.Add the item to the budget controller
 		/* 
 		creates a new item that could either be an income or an expense
@@ -152,13 +160,19 @@ var controller = (function(budgetCtrl, UICtrl){
 		returns the created Item: variable item holds object budget, with entered data
 		*/
 		var item = budgetCtrl.getInputExpInc(input.sign,input.item,input.money);
-		console.log(item);
-		console.log(`input sign: ${input.sign}`);
+		
+		
 		//3. Add item to the user interface 
-		var list = UICtrl.displayItemOnList(item, input.sign);
-		console.log(list);
-		//5. display the budget	
-		//budgetController.getBudgetObj(input.sign,input.money);
+		UICtrl.displayItemOnList(item, input.sign);
+		
+		
+		//4. display the budget	
+		var budgetObj =	budgetCtrl.getBudgetObj();
+		var budget = budgetCtrl.getTotalExpInc(budgetObj, input.sign, input.money);
+		document.querySelector(UIDomStrings.budget).textContent = budget.totalItems.inc - budget.totalItems.exp;
+		document.querySelector(UIDomStrings.income).textContent = budget.totalItems.inc;
+		document.querySelector(UIDomStrings.expenses).textContent = budget.totalItems.exp;
+
 	};	
 
 
