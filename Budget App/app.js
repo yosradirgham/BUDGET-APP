@@ -169,6 +169,7 @@ var controller = (function(budgetCtrl, UICtrl){
 		var budgetObj,budget;
 
 		budgetObj =	budgetCtrl.getBudgetObj();
+		console.log(`budgetObj: ${budgetObj.allItems[input.sign][0]}`);
 		budget = budgetCtrl.getTotalExpInc(budgetObj, input.sign, input.money);
 		
 		//DOM manipulation
@@ -200,7 +201,7 @@ var controller = (function(budgetCtrl, UICtrl){
 	};
 
 	var ctrlDeleteItem = function(event){
-		var item;
+		var item, identifier, obj, type, index;
 
 		//1. Fetch the Id corresponding to out target element
 		item = event.target.parentNode.parentNode.id;
@@ -210,9 +211,23 @@ var controller = (function(budgetCtrl, UICtrl){
 			document.getElementById(item).remove();
 		}
 
-		//3. Delete the element from the data structure
+		//3. Update the budget and ( Income Or Expenses)
 
-		//4. Update the budget and ( Income Or Expenses)
+		//4. Delete the element from the data structure
+		identifier = item.slice(11,14);
+		type = item.slice(0,3);
+
+		obj = budgetCtrl.getBudgetObj();
+
+		obj.allItems[type].forEach(x => {
+			if(x.id == identifier){
+
+				index = obj.allItems[type].indexOf(x);
+
+				obj.allItems[type].splice(index, 1);
+
+			}
+		});
 
 
 	};	
