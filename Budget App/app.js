@@ -1,10 +1,4 @@
 	
-//update the budget
-
-//update the income
-
-//update the expense + percentage
-
 // Budget controller : keeps track of all the incomes and expenses
 var budgetController = (function(){
 	var Expense = function(id, description, value){
@@ -31,17 +25,11 @@ var budgetController = (function(){
 		},
 	};
 
-
-	var totalExp=0, totalInc=0, total=0;
 	var getTotals = function(budget, type, value){
-		if(type === 'inc'){
-			console.log(`value: ${value}`);
-			budget.totalItems.inc += value;
-		}
-		else{
-			budget.totalItems.exp += value;			
-		}
+
+		type === 'inc' ? budget.totalItems.inc += value : budget.totalItems.exp += value;
 		return budget;
+	
 	};
 
 
@@ -84,9 +72,9 @@ var UIController = (function(){
 		inputBtn    : '.enter__budget__btn',
 		incomeList  : '.inc__list',
 		expensesList: '.exp__list',
-		budget : '.budget',
-		income : '.income__value',
-		expenses : '.expenses__value'	
+		budget      : '.budget',
+		income      : '.income__value',
+		expenses    : '.expenses__value'	
 	};
 
 	var getInputData = function(){
@@ -111,8 +99,6 @@ var UIController = (function(){
 		// Create HTML string with a placeholder text
 		type === 'inc' ? html = '<div class="inc__item__%id%"><div class="item__description">%description%</div><div class="item__value">%value%</div><button class="item__delete__item"><img src="delete-Icon.png" width="20"></button></div>' : html = '<div class="exp__item__%id%"><div class="item__description">%description%</div><div class="item__value">%value%</div><div class="item__percentage">%percentage%</div><button class="item__delete__item"><img src="delete-Icon.png" width="20"></button></div>';
 		type === 'inc' ? element = DOMStrings.incomeList : element = DOMStrings.expensesList;
-		//console.log(element);
-		//console.log(`obj.value: ${obj.value}`);
 
 		// Replace the placeholder text with some actual data
 		newHTML = html.replace('%id%',obj.id);
