@@ -123,7 +123,7 @@ var UIController = (function(){
 		var html, newHTML, element;
 
 		// Create HTML string with a placeholder text
-		type === 'inc' ? html = '<div id="inc__item__%id%"><div class="inc__item"><div class="item__description">%description%</div><div class="item__value">%value%</div><button class="item__delete__item"><img src="delete-Icon.png" width="20"></button></div></div>' : html = '<div id="exp__item__%id%"><div class="exp__item"><div class="item__description">%description%</div><div class="item__value">%value%</div><div class="item__percentage">%percentage%</div><button class="item__delete__item"><img src="delete-Icon.png" width="20"></button></div></div>';
+		type === 'inc' ? html = '<div id="inc__item__%id%"><div class="inc__item"><div class="item__description">%description%</div><div class="item__value">%value%</div><button class="delete__item"><img src="delete-Icon.png" width="20"></button></div></div>' : html = '<div id="exp__item__%id%"><div class="exp__item"><div class="item__description">%description%</div><div class="item__value">%value%</div><div class="item__percentage">%percentage%</div><button class="delete__item"><img src="delete-Icon.png" width="20"></button></div></div>';
 		type === 'inc' ? element = DOMStrings.incomeList : element = DOMStrings.expensesList;
 
 		// Replace the placeholder text with some actual data

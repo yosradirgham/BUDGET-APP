@@ -158,9 +158,8 @@ body {
 /******************************************/
 
 .container{
-    border         : 2px solid black;
     position       : absolute;
-    top            : 60%;
+    top            : 56%;
     left           : 44%;
     transform      : translate(-50%, -50%);
     width          : 900px;
@@ -168,44 +167,39 @@ body {
     display        : flex;
     justify-content: space-between; 
     padding        : 0px 20px 0px 30px;
-
 }
 
-.income{
-    border  : 1px solid pink;
-    width   : 350px;
-    padding : 0px 20px;
-}
+.income,
 .expenses{
-    border  : 1px solid pink;
     width   : 350px;
     padding : 0px 20px;
-
 }
 
 .inc__title{
-
+    font-family: Open Sans;
+    font-size  : 22px;
+    color      : #28B9B5; 
 }
 
 .exp__title{
-
+    font-family: Open Sans;
+    font-size  : 22px;
+    color      : #FF5049;
 }
 
 .inc__list,
 .exp__list{
-    border : 1px solid green;
+    position : fixed; 
     padding : 20px 0px 20px 0px;
-
-
 }
 
 .inc__item, 
 .exp__item{
-    border : 1px solid blue;
-    width : 100px;
+    border  : 1px solid blue;
+    padding : 10px 10px 10px 10px;
+    width   : 350px;
     display : flex;
-    flex-direction: row;
-
+    justify-content: space-between; 
 }
 
 .item__description{
@@ -213,11 +207,9 @@ body {
 }
 
 .item__value{
-
 }
 
-.item__delete.item{
-
+.delete__item{
 }
 
 
