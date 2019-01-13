@@ -1,11 +1,31 @@
-	
+
+/*		TO-DO List		*/
+/*
+	1. code does what it's supposed to do but is so messy => need to clean it up
+	2. add style to it
+	3. improve the UX
+	4. add authentification 
+*/	
+
+
+
 // Budget controller : keeps track of all the incomes and expenses
 var budgetController = (function(){
 	var Expense = function(id, description, value){
 		this.id          = id;
 		this.description = description;
 		this.value       = value;
+		this.percentage  = '--';
 	};
+
+	Expense.prototype.calculatePercentage = function(budget){
+		return budget.totalItems.inc > 0 ? this.percentage = Math.round((this.money/budget.totalItems.inc)*100) : this.percentage = '--';
+	};
+
+	var getPercentage = function(){
+		return this.percentage;
+	}
+
 
 	var Income = function(id, description, value){
 		this.id          = id;
@@ -26,17 +46,6 @@ var budgetController = (function(){
 
 		totBudget : 0,
 		percentage : '--'
-	};
-
-	var deleteItem = function(budget, id, type){
-		var value, index;
-		budget.allItems[type].forEach(x => {
-			if(x.id == id){
-				index = budget.allItems[type].indexOf(x);
-				budget.allItems[type].splice(index,1);
-			}
-		});
-		return budget;
 	};
 
 	var getTotals = function(budget, type, value){
@@ -71,6 +80,17 @@ var budgetController = (function(){
 		return budget;
 	};
 
+	var deleteItem = function(budget, id, type){
+		var value, index;
+		budget.allItems[type].forEach(x => {
+			if(x.id === id){
+				index = budget.allItems[type].indexOf(x);
+				budget.allItems[type].splice(index,1);
+			}
+		});
+		return budget;
+	};
+
 	return {
 
 		getInputExpInc : function(type, desc, val){
@@ -97,8 +117,19 @@ var budgetController = (function(){
 
 		updateBudget : function(budget){
 			return newValues(budget);
-		}
+		},
 
+		getPerc : function(budget){
+			budget.allItems.exp.forEach(x => {
+				x.getPercentage();
+			});
+		},
+
+		
+		calculatePercentage : function(budget){
+			return Expense.prototype.calculatePercentage(budget); 
+		
+		}
 	};
 
 })();
@@ -118,7 +149,8 @@ var UIController = (function(){
 		budget      : '.budget',
 		income      : '.income__value',
 		expenses    : '.expenses__value',
-		container   : '.container'	
+		container   : '.container',
+		percentage  : '.item__percentage'	
 	};
 
 	var getInputData = function(){
@@ -214,10 +246,28 @@ var controller = (function(budgetCtrl, UICtrl){
 		document.querySelector(UIDomStrings.expenses).textContent = budget.totalItems.exp;
 	};
 
+	var updatePercentages = function(){
+		//var itemPercentage;
+		var obj = budgetCtrl.getBudgetObj();
+
+		//1. calculate percentages
+		budgetCtrl.calculatePercentage(obj);		
+		console.log(obj.allItems.exp);
+
+		//2. display percentages of the UI
+
+		//3. calculate the global percentage
+
+		//4. display global percentage on the UI
+		//console.log(`item percentage : ${itemPercentage}`);
+		//return itemPercentage;
+
+	};
 
 	var ctrlAddItem = function(){
 		//1. get input data
 		var input = UICtrl.inputDataPublic();
+		console.log(`input: ${input.allItems}`);
 
 		if(input.item != "" && !isNaN(input.money) && input.money > 0){
 		
@@ -233,6 +283,13 @@ var controller = (function(budgetCtrl, UICtrl){
 			
 			//5. display the budget	
 			displayBudget(input);	
+
+			//6. display exepenses percentages'
+			if(input.sign === 'exp'){
+				var perc = updatePercentages();
+				//console.log(`perc : ${perc}`);
+				document.querySelector(UIDomStrings.percentage).textContent = perc;	
+			} 
 		}
 	};
 
@@ -255,7 +312,8 @@ var controller = (function(budgetCtrl, UICtrl){
 
 			//1. Fetch the Id, type corresponding to out target element
 			item = event.target.parentNode.parentNode.parentNode.id;//contains the html element inc__item__id or exp__item__id
-			identifier = item.slice(11,14);// the id of the item
+			identifier = parseInt(item.slice(11,14));// the id of the item
+			console.log(typeof(identifier));
 			type = item.slice(0,3);// the type of the item : exp or inc
 
 			//2. Delete the element from the UI
@@ -272,6 +330,7 @@ var controller = (function(budgetCtrl, UICtrl){
 		}
 	};	
 
+
 	
 	return {
 
@@ -282,6 +341,7 @@ var controller = (function(budgetCtrl, UICtrl){
 			document.querySelector(UIDomStrings.expenses).textContent = 0;
 
 		}
+
 
 	};
 
