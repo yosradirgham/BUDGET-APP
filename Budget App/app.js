@@ -28,22 +28,15 @@ var budgetController = (function(){
 		percentage : '--'
 	};
 
-	var getNewTotal = function(budget){
-		var tot = 0, tot1=0;
-		
-		for(let i in budget.allItems.inc){
-			tot += budget.allItems.inc.i.value;
-		}
-		budget.totalItems.inc = tot;
-
-		for(let i of budget.allItems.exp){
-			tot1 += budget.allItems.exp[i].value;
-		}
-		budget.totalItems.exp = tot1;
-
-		budget.totBudget = getTotalIncomes(budget)-getTotalExpenses(budget);
-
-		budget.totBudget > 0 ? budget.percentage = `${Math.round(budget.totalItems.exp/(budget.totBudget)*100,2)}%` : budget.percentage = '--';
+	var deleteItem = function(budget, id, type){
+		var value, index;
+		budget.allItems[type].forEach(x => {
+			if(x.id == id){
+				index = budget.allItems[type].indexOf(x);
+				budget.allItems[type].splice(index,1);
+			}
+		});
+		return budget;
 	};
 
 	var getTotals = function(budget, type, value){
@@ -54,6 +47,28 @@ var budgetController = (function(){
 		budget.totBudget > 0 ? budget.percentage = `${Math.round(budget.totalItems.exp/(budget.totBudget)*100,2)}%` : budget.percentage = '--';
 		
 		return budget;	
+	};
+
+	var newValues = function(budget){
+		var totalInc = 0, totalExp =0;
+
+		budget.allItems.inc.forEach(x => {
+			totalInc += x.value;
+		});
+
+		budget.allItems.exp.forEach(x => {
+			totalExp += x.value;
+		});
+	
+		budget.totalItems.exp = totalExp;
+		budget.totalItems.inc = totalInc;
+
+
+		budget.totalItems.inc-budget.totalItems.exp > 0 ? budget.totBudget = budget.totalItems.inc-budget.totalItems.exp : budget.totBudget = 0;
+	
+		budget.totBudget > 0 ? budget.percentage = `${Math.round(budget.totalItems.exp/(budget.totBudget)*100,2)}%` : budget.percentage = '--';
+
+		return budget;
 	};
 
 	return {
@@ -76,10 +91,13 @@ var budgetController = (function(){
 			return getTotals(budget, type, value);
 		},
 
-		getNewTotal : function(budget){
-			return getNewTotal(budget);
-		}
+		deleteItem : function(budget, id, type){
+			return deleteItem(budget, id, type);
+		},
 
+		updateBudget : function(budget){
+			return newValues(budget);
+		}
 
 	};
 
@@ -218,40 +236,42 @@ var controller = (function(budgetCtrl, UICtrl){
 		}
 	};
 
+
+	var ctrlDisplayNewBudget = function(obj){
+		var newBudget;
+
+		newBudget = budgetCtrl.updateBudget(obj);
+
+		//DOM manipulation
+		document.querySelector(UIDomStrings.budget).textContent = newBudget.totBudget;//totalItems.inc - budget.totalItems.exp;
+		document.querySelector(UIDomStrings.income).textContent = newBudget.totalItems.inc;
+		document.querySelector(UIDomStrings.expenses).textContent = newBudget.totalItems.exp;
+		
+	};
+
 	var ctrlDeleteItem = function(event){
-		var item, identifier, obj, type, index;
+		if(event.target.parentNode.className == 'delete__item'){
+			var item, identifier, obj, type, updatedItem;
 
-		//1. Fetch the Id, type corresponding to out target element
-		item = event.target.parentNode.parentNode.parentNode.id;
-		identifier = item.slice(11,14);
-		type = item.slice(0,3);
+			//1. Fetch the Id, type corresponding to out target element
+			item = event.target.parentNode.parentNode.parentNode.id;//contains the html element inc__item__id or exp__item__id
+			identifier = item.slice(11,14);// the id of the item
+			type = item.slice(0,3);// the type of the item : exp or inc
 
-		//2. Delete the element from the UI
-		if(item){
-			document.getElementById(item).remove();
-		}
-
-		//3. Delete the element from the data structure
-		obj = budgetCtrl.getBudgetObj();
-
-		obj.allItems[type].forEach(x => {
-			if(x.id == identifier){
-
-				index = obj.allItems[type].indexOf(x);
-
-				obj.allItems[type].splice(index, 1);
-
+			//2. Delete the element from the UI
+			if(item){
+				document.getElementById(item).remove();
 			}
-		});
 
-		//4. Update the budget and ( Income Or Expenses)
-/* 
-	Not working
- 	should update the budget
- */		
-		budgetCtrl.getNewTotal(obj);
+			//3. Delete the element from the data structure
+			obj = budgetCtrl.getBudgetObj();
+			updatedItem = budgetCtrl.deleteItem(obj, identifier, type);
 
+			//4. update budget and display it
+			ctrlDisplayNewBudget(updatedItem);
+		}
 	};	
+
 	
 	return {
 
