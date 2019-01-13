@@ -51,7 +51,7 @@ var budgetController = (function(){
 	// Get the percentage of rach Expence instance
 	var getPercentage = function(){
 		return this.percentage;
-	}
+	};
 
 
 
