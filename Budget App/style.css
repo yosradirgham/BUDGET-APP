@@ -157,21 +157,81 @@ body {
 /*           The bottom Part              */
 /******************************************/
 
-
 .container{
-    position : absolute;
-    width    : 350px;
-    top      : 60%;
-    left     : 50%;
-    transform: translate(-50%, -50%);
-    color    : black;
-    display  : flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    border         : 2px solid black;
+    position       : absolute;
+    top            : 60%;
+    left           : 44%;
+    transform      : translate(-50%, -50%);
+    width          : 900px;
+    color          : grey;
+    display        : flex;
+    justify-content: space-between; 
+    padding        : 0px 20px 0px 30px;
+
 }
 
 .income{
+    border  : 1px solid pink;
+    width   : 350px;
+    padding : 0px 20px;
 }
+.expenses{
+    border  : 1px solid pink;
+    width   : 350px;
+    padding : 0px 20px;
+
+}
+
+.inc__title{
+
+}
+
+.exp__title{
+
+}
+
+.inc__list,
+.exp__list{
+    border : 1px solid green;
+    padding : 20px 0px 20px 0px;
+
+
+}
+
+.inc__item, 
+.exp__item{
+    border : 1px solid blue;
+    width : 100px;
+    display : flex;
+    flex-direction: row;
+
+}
+
+.item__description{
+
+}
+
+.item__value{
+
+}
+
+.item__delete.item{
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
