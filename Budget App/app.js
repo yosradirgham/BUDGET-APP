@@ -44,7 +44,7 @@ var budgetController = (function(){
 
 	// Calculate the percentage of each Expence instance
 	Expense.prototype.calculatePercentage = function(budget){
-		return budget.totalItems.inc > 0 ? this.percentage = Math.round((this.money/budget.totalItems.inc)*100) : this.percentage = '--';
+		return budget.totalItems.inc > 0 ? this.percentage = `${Math.round(this.value/budget.totalItems.inc*100)}%` : this.percentage = '--';
 	};
 
 
@@ -88,7 +88,7 @@ var budgetController = (function(){
 		type === 'inc' ? budget.totalItems.inc += value : budget.totalItems.exp += value;
 		difference = budget.totalItems.inc-budget.totalItems.exp;
 		difference < 0 ? budget.totBudget = 0 : budget.totBudget = difference;
-		budget.totBudget > 0 ? budget.percentage = `${Math.round(budget.totalItems.exp/(budget.totBudget)*100,2)}%` : budget.percentage = '--';
+		budget.totBudget > 0 ? budget.percentage = `${Math.round(budget.totalItems.exp/(budget.totalItems.inc)*100,2)}%` : budget.percentage = '--';
 		
 		return budget;	
 	};
@@ -257,28 +257,18 @@ var controller = (function(budgetCtrl, UICtrl){
 	};
 
 	
-	/*var updatePercentages = function(){
-		//var itemPercentage;
-		var obj = budgetCtrl.getBudgetObj();
+	// For each Expense instance calculate its corresponding percentage
+	var calcPercentage = function(){
+		var obj;
+		obj = budgetCtrl.getBudgetObj();
+		obj.allItems.exp.forEach(x => x.percentage = x.calculatePercentage(obj));
+		return obj;
+	};
 
-		//1. calculate percentages
-		budgetCtrl.calculatePercentage(obj);		
-		console.log(obj.allItems.exp);
 
-		//2. display percentages of the UI
-
-		//3. calculate the global percentage
-
-		//4. display global percentage on the UI
-		//console.log(`item percentage : ${itemPercentage}`);
-		//return itemPercentage;
-
-	};*/
-
-	
 
 	var ctrlAddItem = function(){
-		var input, item, budget ;
+		var input, item, budget, percentage;
 		
 		input = UICtrl.inputDataPublic();	//1. get input data
 
@@ -294,12 +284,8 @@ var controller = (function(budgetCtrl, UICtrl){
 
 			displayBudget(budget);		//6. display the budget	
 
+			percentage = calcPercentage();		//7. display exepenses percentages
 
-/*  still working on it x(  */
-	//		if(input.sign === 'exp'){			//7. display exepenses percentages'
-	//			var perc = updatePercentages();
-	//			document.querySelector(UIDomStrings.percentage).textContent = perc;	
-	//		} 
 		}
 	};
 
