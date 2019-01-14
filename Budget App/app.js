@@ -48,12 +48,6 @@ var budgetController = (function(){
 	};
 
 
-	// Get the percentage of rach Expence instance
-	var getPercentage = function(){
-		return this.percentage;
-	};
-
-
 
 	// Updates the budget after an Item has been deleted
 	var newValues = function(budget){
@@ -122,10 +116,6 @@ var budgetController = (function(){
 		updateBudget : function(budget){
 			return newValues(budget);
 		},
-
-		getPerc : function(budget){
-			budget.allItems.exp.forEach(x => x.getPercentage());
-		},
 		
 		calculatePercentage : function(budget){
 			return Expense.prototype.calculatePercentage(budget); 
@@ -136,6 +126,7 @@ var budgetController = (function(){
 })();
 
 
+/*       ----------- User Iterface Controller ------------      */
 
 var UIController = (function(){
 	
@@ -184,7 +175,7 @@ var UIController = (function(){
 		// Replace the placeholder text with some actual data
 		newHTML = html.replace('%id%',obj.id);
 		newHTML = newHTML.replace('%description%',obj.description);
-		newHTML = newHTML.replace('%value%',parseInt(obj.value));
+		newHTML = newHTML.replace('%value%',formatNumbers(parseInt(obj.value),type));
 
 		// Insert the HTML into the DOM
 		document.querySelector(element).insertAdjacentHTML('beforeend', newHTML);
@@ -198,6 +189,36 @@ var UIController = (function(){
 		fields = document.querySelectorAll(`${DOMStrings.inputItem},${DOMStrings.inputMoney}`);
 		Array.from(fields).forEach( x => x.value = "");
 	};
+
+
+
+	// Display percentages on the UI
+	var displayPercentages = function(item){
+		var nodeList, currId;
+		
+		nodeList = document.querySelectorAll(DOMStrings.percentage);
+		
+		Array.from(nodeList).forEach(x => {
+			currId = parseInt( x.parentNode.parentNode.id.slice(11));
+	 		if(item.id === currId)	x.textContent = item.percentage;
+		});
+	};
+
+
+
+	// Formatting numbers
+	var formatNumbers = function(num, type){
+		
+		num = Math.abs(num);
+		num = num.toFixed(2);
+
+		numSplit = num.split('.'); //numSplit[0]
+		if(numSplit[0].length > 3) numSplit[0] = numSplit[0].substr(0,numSplit[0].length-3)+','+numSplit[0].substr(numSplit[0].length-3,3);
+
+		return (type === 'inc' ? '+' : '-')+numSplit[0]+'.'+numSplit[1];
+
+	};
+
 
 
 	return {
@@ -215,6 +236,14 @@ var UIController = (function(){
 
 		clearInputFields : function(){
 			return clearFields();
+		},
+
+		displayPercentage : function(item){
+			return displayPercentages(item);
+		},
+
+		formatNumbers : function(n, type){
+			return formatNumbers(n, type);
 		}
 
 	}
@@ -251,9 +280,9 @@ var controller = (function(budgetCtrl, UICtrl){
 
 	// Display calculated budget
 	var displayBudget = function(obj){
-		document.querySelector(UIDomStrings.budget).textContent   = obj.totBudget;
-		document.querySelector(UIDomStrings.income).textContent   = obj.totalItems.inc;
-		document.querySelector(UIDomStrings.expenses).textContent = obj.totalItems.exp;
+		document.querySelector(UIDomStrings.budget).textContent   = UICtrl.formatNumbers(obj.totBudget,'inc');
+		document.querySelector(UIDomStrings.income).textContent   = UICtrl.formatNumbers(obj.totalItems.inc,'inc');
+		document.querySelector(UIDomStrings.expenses).textContent = UICtrl.formatNumbers(obj.totalItems.exp, 'exp');
 	};
 
 	
@@ -278,13 +307,15 @@ var controller = (function(budgetCtrl, UICtrl){
 
 			UICtrl.displayItemOnList(item, input.sign);		//3. Add item to the user interface 
 
-			UIController.clearInputFields();	//4. clear input fields
+			UICtrl.clearInputFields();	//4. clear input fields
 
-			budget = calculateBudget(input);	//5. calculate the budget 	
+			budget = calculateBudget(input);	//5. calculate the budget 
 
 			displayBudget(budget);		//6. display the budget	
 
-			percentage = calcPercentage();		//7. display exepenses percentages
+			percentage = calcPercentage();		//7. calculate exepenses percentages
+
+			UICtrl.displayPercentage(item);		//8. display percentages
 
 		}
 	};
