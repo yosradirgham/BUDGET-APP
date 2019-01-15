@@ -142,7 +142,9 @@ var UIController = (function(){
 		income      : '.income__value',
 		expenses    : '.expenses__value',
 		container   : '.container',
-		percentage  : '.item__percentage'	
+		percentage  : '.item__percentage',
+		budgetTitle : '.budget__title',
+		type        : '.select'	
 	};
 
 
@@ -215,8 +217,24 @@ var UIController = (function(){
 		numSplit = num.split('.'); //numSplit[0]
 		if(numSplit[0].length > 3) numSplit[0] = numSplit[0].substr(0,numSplit[0].length-3)+','+numSplit[0].substr(numSplit[0].length-3,3);
 
-		return (type === 'inc' ? '+' : '-')+numSplit[0]+'.'+numSplit[1];
+		return (type === 'inc' ? '+' : '-')+' '+numSplit[0]+'.'+numSplit[1];
 
+	};
+
+
+
+
+	// Get the date
+	var month = function(){
+		var d, arr;
+		d = new Date();
+		arr = ['January','Febuary','March','April','May','June','July','August','September','October','November','December'];
+		return arr[d.getMonth()];
+	};
+
+	var year = function(){
+		var d = new Date();
+		return d.getFullYear();
 	};
 
 
@@ -244,6 +262,14 @@ var UIController = (function(){
 
 		formatNumbers : function(n, type){
 			return formatNumbers(n, type);
+		},
+
+		getDate : function(){
+			return month();
+		},
+
+		getYear : function(){
+			return year();
 		}
 
 	}
@@ -265,6 +291,7 @@ var controller = (function(budgetCtrl, UICtrl){
 
 		document.querySelector(UIDomStrings.container).addEventListener('click', ctrlDeleteItem);// Event handler for the delete button that is associated to each one of our items listed on our web page
 
+		document.querySelector(UIDomStrings.type).addEventListener('change', changeColor);
 	};
 
 
@@ -280,7 +307,7 @@ var controller = (function(budgetCtrl, UICtrl){
 
 	// Display calculated budget
 	var displayBudget = function(obj){
-		document.querySelector(UIDomStrings.budget).textContent   = UICtrl.formatNumbers(obj.totBudget,'inc');
+		document.querySelector(UIDomStrings.budget).textContent   = UICtrl.formatNumbers(obj.totBudget,obj.totBudget>0? 'inc' : 'exp');
 		document.querySelector(UIDomStrings.income).textContent   = UICtrl.formatNumbers(obj.totalItems.inc,'inc');
 		document.querySelector(UIDomStrings.expenses).textContent = UICtrl.formatNumbers(obj.totalItems.exp, 'exp');
 	};
@@ -352,6 +379,14 @@ var controller = (function(budgetCtrl, UICtrl){
 	};	
 
 
+
+	var changeColor = function(){
+		console.log('hey');
+			var fields = document.querySelectorAll(UIDomStrings.inputItem+','+UIDomStrings.inputMoney+','+UIDomStrings.type);
+			Array.from(fields).forEach(x => x.classList.toggle('red-focus'));
+	};
+
+
 	
 	return {
 		init : function(){
@@ -359,6 +394,7 @@ var controller = (function(budgetCtrl, UICtrl){
 			document.querySelector(UIDomStrings.budget).textContent = 0;
 			document.querySelector(UIDomStrings.income).textContent = 0;
 			document.querySelector(UIDomStrings.expenses).textContent = 0;
+			document.querySelector(UIDomStrings.budgetTitle).textContent = `Available budget in ${UICtrl.getDate()} ${UICtrl.getYear()} :`;
 		}
 	};
 
